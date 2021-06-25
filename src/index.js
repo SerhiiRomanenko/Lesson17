@@ -1,30 +1,19 @@
 const ZERO = 0;
 const ONE = 1;
-const TWO = 2;
 
-function getReverseString(number) {
+function reverse(number) {
     if (String(number) === '') {
         return '';
     } else {
-        return Number(getReverseString(String(number).slice(ONE)) + String(number)[ZERO]);
+        return Number(reverse(String(number).slice(ONE)) + String(number)[ZERO]);
     }
-}
-
-function getNextNum(number) {
-    return number + getReverseString(number);
 }
 
 function isPalindrome(number) {
-    const lengthOfNum = String(number).length;
-    const strNum = String(number);
-    for (let i = ZERO, j = lengthOfNum - ONE; i < lengthOfNum / TWO; i++, j--) {
-        if (lengthOfNum % TWO === ZERO && strNum[i] !== strNum[j]) {
-            return false;
-        } else if (lengthOfNum % TWO !== ZERO && strNum[i] !== strNum[j]) {
-            return false;
-        }
+    if (number === reverse(number)) {
+        return true;
     }
-    return true;
+    return false;
 }
 
 //-------------------------MAIN FUNCTION-----------------//
@@ -37,7 +26,7 @@ function findPalindrome(num, acc = ZERO) {
         };
     }
     try {
-        return findPalindrome(getNextNum(num), ++acc);
+        return findPalindrome(num + reverse(num), ++acc);
     } catch (error) {
         throw new Error('Too much steps to find palindrome');
     }
